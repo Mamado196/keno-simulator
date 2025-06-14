@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>محاكي كينو أونلاين 🔥</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 50px; background: #111; color: #fff; }
+    input, button { padding: 10px; margin: 5px; border-radius: 5px; }
+    #result { margin-top: 20px; white-space: pre-wrap; text-align: left; width: 60%; margin: auto; background: #222; padding: 15px; border-radius: 10px;}
+  </style>
+</head>
+<body>
+  <h1>🎲 محاكي كينو - Stake 🔥</h1>
+  <label>عدد السحوبات: </label><input type="number" id="draws" value="1000"><br>
+  <label>عدد الأرقام في كل سحب: </label><input type="number" id="perDraw" value="10"><br>
+  <button onclick="simulateKeno()">ابدأ المحاكاة</button>
+
+  <div id="result"></div>
+
+  <script>
+    function simulateKeno() {
+      let numDraws = parseInt(document.getElementById("draws").value);
+      let perDraw = parseInt(document.getElementById("perDraw").value);
+      let counts = {};
+      for (let i = 1; i <= 40; i++) counts[i] = 0;
+
+      for (let i = 0; i < numDraws; i++) {
+        let draw = [];
+        while (draw.length < perDraw) {
+          let num = Math.floor(Math.random() * 40) + 1;
+          if (!draw.includes(num)) draw.push(num);
+        }
+        draw.forEach(n => counts[n]++);
+      }
+
+      let sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+      let resultText = "🔥 أفضل 10 أرقام:\n\n";
+      for (let i = 0; i < 10; i++) {
+        resultText += `رقم ${sorted[i][0]}: ${sorted[i][1]} مرة\n`;
+      }
+
+      document.getElementById("result").innerText = resultText;
+    }
+  </script>
+</body>
+</html>
